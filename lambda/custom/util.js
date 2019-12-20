@@ -20,7 +20,7 @@ const getS3PreSignedUrl = function getS3PreSignedUrl(s3ObjectKey) {
 const replaceStringTags = (str, tags) => {
   let replacedStr = str;
   Object.keys(tags).forEach((tagName) => {
-    replacedStr = str.replace(`{${tagName}}`, tags[tagName]);
+    replacedStr = replacedStr.replace(`{${tagName}}`, tags[tagName]);
   });
 
   return replacedStr;
@@ -34,10 +34,18 @@ const get = async (options) => new Promise((resolve, reject) => {
       data += chunk;
     });
 
-    res.on('end', () => resolve({
-      statusCode: res.statusCode,
-      body: JSON.parse(data),
-    }));
+    res.on('end', () => {
+      try {
+        const jsonData = JSON.parse(data);
+
+        return resolve({
+          statusCode: res.statusCode,
+          body: jsonData,
+        });
+      } catch (err) {
+        return reject(new Error(`error parsing JSON response from ${options.host}`));
+      }
+    });
   }).on('error', (err) => reject(err));
 });
 
