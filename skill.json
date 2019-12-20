@@ -1,5 +1,19 @@
 {
   "manifest": {
+    "apis": {
+      "custom": {
+        "endpoint": {
+          "sourceDir": "lambda/custom",
+          "uri": "van-bus-tracker-alexa"
+        }
+      }
+    },
+    "manifestVersion": "1.0",
+    "permissions": [
+      {
+        "name": "alexa::devices:all:address:full:read"
+      }
+    ],
     "publishingInformation": {
       "locales": {
         "en-CA": {
@@ -7,7 +21,7 @@
           "summary": "Sample Short Description",
           "description": "Sample Full Description",
           "examplePhrases": [
-            "Alexa open hello world",
+            "Alexa ask bus tracker for the next bus",
             "hello",
             "help"
           ],
@@ -18,15 +32,6 @@
       "testingInstructions": "Sample Testing Instructions.",
       "category": "KNOWLEDGE_AND_TRIVIA",
       "distributionCountries": []
-    },
-    "apis": {
-      "custom": {
-        "endpoint": {
-          "sourceDir": "lambda/custom",
-          "uri": "van-bus-tracker-alexa"
-        }
-      }
-    },
-    "manifestVersion": "1.0"
+    }
   }
 }
