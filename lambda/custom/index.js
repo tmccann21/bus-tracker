@@ -1,8 +1,3 @@
-/* *
-* This sample demonstrates handling intents from an Alexa skill using the Alexa Skills Kit SDK (v2).
-* Please visit https://alexa.design/cookbook for additional examples on implementing slots, dialog management,
-* session persistence, api calls, and more.
-* */
 const Alexa = require('ask-sdk-core');
 // i18n library dependency, we use it below in a localisation interceptor
 const i18n = require('i18next');
@@ -43,17 +38,28 @@ const GetNextBusIntentHandler = {
     && Alexa.getIntentName(handlerInput.requestEnvelope) === 'GetNextBusIntent';
   },
   async handle(handlerInput) {
+    const filledSlots = handlerInput.requestEnvelope.request.intent.slots;
+    const slotValues = util.getSlotValues(filledSlots);
+
+    if (slotValues.BusNumber === undefined) {
+      return handlerInput
+        .responseBuilder(handlerInput.t('MISSING_NUMBER_MSG'))
+        .getResponse();
+    }
+
+    slotValues.BusNumber = translinkHelper.padRouteNumber(slotValues.BusNumber);
+
     const location = await locationHelper.getDeviceLocation(handlerInput);
     const nearbyStops = await translinkHelper.getNearbyStops(handlerInput, location);
     const stopNumber = nearbyStops[0].StopNo;
     const busEstimates = await translinkHelper.getBusEstimates(stopNumber);
-    const nextBus = busEstimates[0];
+    // const nextBus = busEstimates[0];
     const nextArrival = busEstimates[0].Schedules[0];
 
     let speakOutput = handlerInput.t('NEXT_BUS_MSG');
     speakOutput = util.replaceStringTags(speakOutput, {
       stopNumber,
-      busNumber: nextBus.RouteNo,
+      busNumber: slotValues.BusNumber,
       time: nextArrival.ExpectedLeaveTime,
     });
 
@@ -172,6 +178,7 @@ const LocalisationRequestInterceptor = {
     });
   },
 };
+
 /**
 * This handler acts as the entry point for your skill, routing all request and response
 * payloads to the handlers above. Make sure any new handlers or interceptors you've

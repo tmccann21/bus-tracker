@@ -17,11 +17,16 @@
         },
         {
           "name": "GetNextBusIntent",
-          "slots": [],
+          "slots": [
+            {
+              "name": "BusNumber",
+              "type": "AMAZON.NUMBER"
+            }
+          ],
           "samples": [
-            "next bus",
-            "next bus time",
-            "get next bus"
+            "when is the next {BusNumber}",
+            "what time is the {BusNumber} coming",
+            "when is the {BusNumber} coming"
           ]
         },
         {

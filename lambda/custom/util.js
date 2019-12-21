@@ -57,9 +57,27 @@ const getEnvironmentVariable = (name) => {
   return process.env[name];
 };
 
+/*
+* Helper function to get filled slots
+*/
+const getSlotValues = (filledSlots) => {
+  const slotValues = {};
+
+  console.log(`The filled slots: ${JSON.stringify(filledSlots)}`);
+  Object.keys(filledSlots).forEach((item) => {
+    const { name } = filledSlots[item];
+    if (filledSlots[name] && filledSlots[name].value !== '?') {
+      slotValues[name] = filledSlots[name].value;
+    }
+  });
+
+  return slotValues;
+};
+
 module.exports = {
   getS3PreSignedUrl,
   replaceStringTags,
   getEnvironmentVariable,
+  getSlotValues,
   get,
 };

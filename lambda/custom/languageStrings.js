@@ -13,9 +13,10 @@ module.exports = {
       HELP_MSG: 'You can say hello to me! How can I help?',
       GOODBYE_MSG: 'Goodbye!',
       REFLECTOR_MSG: 'You just triggered {{intentName}}',
-      FALLBACK_MSG: 'Sorry, I don\'t know about that. Please try again.',
+      FALLBACK_MSG: 'Sorry, I don\'t know how to do that. Please try again or say help for sample commands',
       ERROR_MSG: 'Sorry, I had trouble doing what you asked. Please try again.',
       REQUEST_PERMISSION_MSG: 'Please enable device address information through the alexa app',
+      MISSING_NUMBER_MSG: 'Please provide a bus number so we can give you an arrival estimate',
     },
   },
 };
