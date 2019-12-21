@@ -74,10 +74,26 @@ const getSlotValues = (filledSlots) => {
   return slotValues;
 };
 
+/*
+* split a number into it's digits, and return as a string
+* ex 50010. becomes 5 0 0 1 0
+*/
+const splitNumber = (number) => {
+  let out = '';
+  const strNumber = number.toString();
+  for (let i = 0; i < strNumber.length - 1; i += 1) {
+    out += `${strNumber.charAt(i)} `;
+  }
+  out += strNumber.charAt(strNumber.length - 1);
+
+  return out;
+};
+
 module.exports = {
   getS3PreSignedUrl,
   replaceStringTags,
   getEnvironmentVariable,
   getSlotValues,
+  splitNumber,
   get,
 };

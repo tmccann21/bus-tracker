@@ -47,18 +47,18 @@ const GetNextBusIntentHandler = {
         .getResponse();
     }
 
-    slotValues.BusNumber = translinkHelper.padRouteNumber(slotValues.BusNumber);
+    const paddedBusNumber = translinkHelper.padRouteNumber(slotValues.BusNumber);
 
     const location = await locationHelper.getDeviceLocation(handlerInput);
     const nearbyStops = await translinkHelper.getNearbyStops(handlerInput, location);
     const stopNumber = nearbyStops[0].StopNo;
-    const busEstimates = await translinkHelper.getBusEstimates(stopNumber);
-    // const nextBus = busEstimates[0];
+    const busEstimates = await translinkHelper.getBusEstimates(stopNumber, paddedBusNumber);
     const nextArrival = busEstimates[0].Schedules[0];
 
     let speakOutput = handlerInput.t('NEXT_BUS_MSG');
     speakOutput = util.replaceStringTags(speakOutput, {
-      stopNumber,
+      onStreet: nearbyStops[0].OnStreet,
+      atStreet: nearbyStops[0].AtStreet,
       busNumber: slotValues.BusNumber,
       time: nextArrival.ExpectedLeaveTime,
     });

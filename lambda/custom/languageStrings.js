@@ -9,7 +9,7 @@ module.exports = {
   en: {
     translation: {
       WELCOME_MSG: 'Welcome, try asking for the next bus by saying next bus',
-      NEXT_BUS_MSG: 'The next bus at stop {stopNumber} is the {busNumber} at {time}',
+      NEXT_BUS_MSG: 'The next {busNumber} at {onStreet} and {atStreet} is arriving at {time}',
       HELP_MSG: 'You can say hello to me! How can I help?',
       GOODBYE_MSG: 'Goodbye!',
       REFLECTOR_MSG: 'You just triggered {{intentName}}',
